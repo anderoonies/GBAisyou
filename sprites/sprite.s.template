@@ -1,0 +1,18 @@
+
+@{{'{{'}}BLOCK({{name}})
+    .section .rodata
+    .align  2
+    .global {{name}}Tiles       @ 128 unsigned chars
+    .hidden {{name}}Tiles
+{{name}}Tiles:
+    {% for chunk in chunks %}
+    .word{% for word in chunk %} {{word}}{% if not loop.last %},{% endif %}{% endfor %}
+    {% endfor %}
+    .section .rodata
+    .align  2
+    .global {{name}}Pal     @ 4 unsigned chars
+    .hidden {{name}}Pal
+{{name}}Pal:
+    .hword {% for color in palette %}{{color}}{% if not loop.last %},{% endif %}{% endfor %}
+
+@{{'}}'}}BLOCK({{name}})
